@@ -63,7 +63,10 @@ Write-Host "Starting Service..."
 Start-Service docker
 
 Write-Host "Finished. If you want to run docker as a non-admin, add to the daemon.json in the opened folder."
+Write-Host "It might open your Documents instead, if so you will need to create this file manually."
 Write-Host @"
+C:\ProgramData\docker\config
+
 {
     "hosts":  [
                   "npipe://"
