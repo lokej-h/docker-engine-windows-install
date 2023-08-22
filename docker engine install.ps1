@@ -11,22 +11,22 @@
   
  # Check to see if we are currently running "as Administrator"
  if ($myWindowsPrincipal.IsInRole($adminRole))
-    {
+{
     # We are running "as Administrator" - so change the title and background color to indicate this
     $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Elevated)"
     $Host.UI.RawUI.BackgroundColor = "DarkBlue"
     clear-host
-    }
- else
-    {
+}
+else
+{
     # We are not running "as Administrator" - so relaunch as administrator
 
     # This line from https://superuser.com/questions/108207/how-to-run-a-powershell-script-as-administrator
     Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
-    
+
     # Exit from the current, unelevated, process
     exit
-    }
+}
 
 # --------
 # the steps for installing docker engine manually are here
@@ -53,7 +53,7 @@ Write-Host "Docker Engine downloaded"
 
 # Installation
 
-Write-Host "Extracting Docer Engine to Program Files"
+Write-Host "Extracting Docker Engine to Program Files"
 Expand-Archive $downloadedFilePath -DestinationPath $Env:ProgramFiles -Force
 
 Write-Host "Registering Service..."
