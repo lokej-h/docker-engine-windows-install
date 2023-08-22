@@ -56,6 +56,13 @@ Write-Host "Docker Engine downloaded"
 Write-Host "Extracting Docker Engine to Program Files"
 Expand-Archive $downloadedFilePath -DestinationPath $Env:ProgramFiles -Force
 
+Write-Host "Adding to User path"
+$addPath = ($Env:ProgramFiles + "\docker")
+$regexAddPath = [regex]::Escape($addPath)
+$arrPath = [System.Environment]::GetEnvironmentVariable('PATH', 'User') -split ';' | Where-Object {$_ -notMatch "^$regexAddPath\\?"}
+$newPath = ($arrPath[0..($arrPath.Length-2)] + $addPath) -join ';'
+[System.Environment]::SetEnvironmentVariable('PATH', $newPath, 'User')
+
 Write-Host "Registering Service..."
 &$Env:ProgramFiles\Docker\dockerd --register-service
 
